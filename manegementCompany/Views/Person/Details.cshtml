@@ -1,0 +1,21 @@
+﻿@using web.Models;
+@model Person
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+<table class="table">
+	<tr>
+		<td>@Html.DisplayNameFor(model => model.firstName)</td>
+		<td>@Html.DisplayNameFor(model => model.secondName)</td>
+		<td>@Html.DisplayNameFor(model => model.id)</td>
+	</tr>
+	<tr>
+		<td>@Html.DisplayFor(model => model.firstName)</td>
+		<td>@Html.DisplayFor(model => model.secondName)</td>
+		<td>@Html.DisplayFor(model => model.id)</td>
+	</tr>		
+</table>

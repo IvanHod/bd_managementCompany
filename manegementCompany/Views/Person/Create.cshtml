@@ -1,0 +1,40 @@
+﻿@using web.Models;
+@model Person
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create new user</h2>
+
+@using(Html.BeginForm()) 
+{
+<div class="row">
+	<div class="col-md-6">
+		<table class="table">
+		<thead><tr>
+			<th>first name</th>
+			<th>second name</th>
+		</tr></thead>
+		<tbody>
+			<tr>
+				<td>@Html.DisplayNameFor(model => model.firstName)</td>
+				<td>
+						@Html.EditorFor(model => model.firstName)
+						@Html.ValidationMessageFor(model => model.firstName)
+				</td>
+			</tr>
+			<tr>
+				<td>@Html.DisplayNameFor(model => model.secondName)</td>
+				<td>
+						@Html.EditorFor(model => model.secondName)
+						@Html.ValidationMessageFor(model => model.secondName)
+				</td>
+			</tr>
+		</tbody>
+		</table>
+		<input type="submit" class="btn btn-success pull-right" value="save" />
+	</div>
+</div>
+}

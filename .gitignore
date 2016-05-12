@@ -30,3 +30,9 @@
 
 # Debug files
 *.dSYM/
+
+# my settings
+packages
+Scripts
+Content
+fonts

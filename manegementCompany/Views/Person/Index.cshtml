@@ -1,0 +1,48 @@
+@using web.Models;
+﻿@model IEnumerable < Person >
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Index</h2>
+<div>
+	<table class="table">
+	<thead>
+		<tr>
+			<td>name</td>
+			<td>second name</td>
+			<td>view</td>
+			<td>edit</td>
+			<td>delete</td>		
+		</tr>	
+	</thead>
+	<tbody>
+	@foreach(Person p in @Model) {
+		<tr>
+			<td>@p.firstName</td>
+			<td>@p.secondName</td>
+			<td>
+				<a href=@Url.Action("Details", "Person", new { id = p.id } )>
+					<button class="btn btn-xs btn-info">view</button>
+				</a>
+			</td>
+			<td>edit</td>
+			<td>
+				<a href=@Url.Action("Delete", "Person", new { id = p.id } )>
+					<button class="btn btn-xs btn-danger">delete</button>
+				</a>
+			</td>
+		</tr>	
+	}
+	</tbody>
+	</table>
+</div>
+
+<script>
+
+	function setActionTab() {
+		$('nav li').removeClass('active');
+		$('#person').addClass("active");
+	}
+</script>
