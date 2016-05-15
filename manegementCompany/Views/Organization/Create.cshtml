@@ -1,0 +1,182 @@
+@using web.Models;
+@model Organization
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Создание организации</h2>
+
+@using(Html.BeginForm()) 
+{
+<div class="row form-group">
+	<div class="col-md-2">
+		<label>Полное наименование: </label>
+	</div>
+	<div class="col-md-10">
+		@Html.EditorFor(model => model.fullName, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.fullName)
+	</div>
+</div>
+<div class="row form-group">
+	<div class="col-md-2">
+		<label>Сокращенное наименование: </label>
+	</div>
+	<div class="col-md-10">
+		@Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.name)
+	</div>
+</div>
+<div class="row form-group">
+	<div class="col-md-2">
+		<label>Телефоны:</label>
+	</div>
+	<div class="col-md-10">
+		@Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.phone)
+	</div>
+</div>
+<div class="row form-group">
+	<div class="col-md-2">
+		<label>E-mail:</label>
+	</div>
+	<div class="col-md-4">
+		@Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.email)
+	</div>
+	<div class="col-md-2">
+		<label>Пароль:</label>
+	</div>
+	<div class="col-md-4">
+		@Html.PasswordFor(model => model.password, new {@class="form-control"})
+		@Html.ValidationMessageFor(model => model.password)
+	</div>
+</div>
+<div class="row form-group">
+	<div class="col-md-6">
+		<h3>Юридический адрес: </h3>
+		<div class="row">
+			<div class="col-md-4">
+				<label>Выберете район: </label>
+			</div>
+			<div class="col-md-8 form-group">
+				<select name="legalAddress[region]" class="select2 form-control"></select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<label>Выберете город: </label>
+			</div>
+			<div class="col-md-8 form-group">
+				<select name="legalAddress[city]" class="select2 form-control"></select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<label>Выберете улицу: </label>
+			</div>
+			<div class="col-md-8 form-group">
+				<select name="legalAddress[street]" class="select2 form-control"></select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<label>Выберете дом: </label>
+			</div>
+			<div class="col-md-8 form-group">
+				<select name="legalAddress[house]" class="select2 form-control"></select>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<h3>Физический адрес: </h3>
+		<div class="row">
+			<div class="col-md-4">
+				<label>Выберете район: </label>
+			</div>
+			<div class="col-md-8 form-group">
+				<select name="address[region]" class="select2 form-control"></select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<label>Выберете город: </label>
+			</div>
+			<div class="col-md-8 form-group">
+				<select name="address[city]" class="select2 form-control"></select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<label>Выберете улицу: </label>
+			</div>
+			<div class="col-md-8 form-group">
+				<select name="address[street]" class="select2 form-control"></select>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<label>Выберете дом: </label>
+			</div>
+			<div class="col-md-8 form-group">
+				<select name="address[house]" class="select2 form-control"></select>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row form-group">
+	<div class="col-md-2">
+		<label>ИНН:</label>
+	</div>
+	<div class="col-md-4">
+		@Html.EditorFor(model => model.INN, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.INN)
+	</div>
+	<div class="col-md-2">
+		<label>КПП:</label>
+	</div>
+	<div class="col-md-4">
+		@Html.PasswordFor(model => model.KPP, new {@class="form-control"})
+		@Html.ValidationMessageFor(model => model.KPP)
+	</div>
+</div>
+<div class="row form-group">
+	<div class="col-md-2">
+		<label>ОГРН:</label>
+	</div>
+	<div class="col-md-4">
+		@Html.EditorFor(model => model.OGRN, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.INN)
+	</div>
+	<div class="col-md-2">
+		<label>ОКТМО:</label>
+	</div>
+	<div class="col-md-4">
+		@Html.PasswordFor(model => model.KPP, new {@class="form-control"})
+		@Html.ValidationMessageFor(model => model.OKTMO)
+	</div>
+</div>
+<div class="row form-group">
+	<div class="col-md-12 text-right">
+		<div class="btn-group">
+			<input type="button" class="btn btn-danger" value="Отменить" />
+			<input type="submit" class="btn btn-success" value="Сохранить" />
+		</div>
+	</div>
+</div>
+}
+
+
+<script>
+console.log($(".select2"))
+	$.ajax({url: 'select2/'});
+	$(".select2").select2({tags: true});
+	$(".select2").on("select2:select", function (e) {
+		console.log("select2:select", $(e.currentTarget).val()); 
+	});
+	function setActionTab() {
+		$('nav li').removeClass('active');
+		$('#organization').addClass("active");
+	}
+</script>

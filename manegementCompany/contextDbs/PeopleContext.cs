@@ -17,6 +17,10 @@ namespace web.ContextDbs
 		}
 
 		public DbSet <Person> People { get; set; }
+
+		public DbSet <Organization> Organizations { get; set; }
+
+		public DbSet <Address> Addresses { get; set; }
 	}
 }
 

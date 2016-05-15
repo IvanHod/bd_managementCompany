@@ -1,8 +1,4 @@
 /home/ivan/monodevelop/manegementCompany/manegementCompany/obj/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
-/home/ivan/monodevelop/manegementCompany/manegementCompany/bin/manegementCompany.dll.mdb
-/home/ivan/monodevelop/manegementCompany/manegementCompany/bin/manegementCompany.dll
-/home/ivan/monodevelop/manegementCompany/manegementCompany/obj/Debug/manegementCompany.dll
-/home/ivan/monodevelop/manegementCompany/manegementCompany/obj/Debug/manegementCompany.dll.mdb
 /home/ivan/monodevelop/manegementCompany/manegementCompany/bin/Microsoft.Web.Infrastructure.dll
 /home/ivan/monodevelop/manegementCompany/manegementCompany/bin/EntityFramework.dll
 /home/ivan/monodevelop/manegementCompany/manegementCompany/bin/EntityFramework.SqlServer.dll
@@ -14,3 +10,7 @@
 /home/ivan/monodevelop/manegementCompany/manegementCompany/bin/System.Web.WebPages.Deployment.dll
 /home/ivan/monodevelop/manegementCompany/manegementCompany/bin/System.Web.WebPages.Razor.dll
 /home/ivan/monodevelop/manegementCompany/manegementCompany/bin/System.Web.Mvc.dll
+/home/ivan/monodevelop/manegementCompany/manegementCompany/bin/manegementCompany.dll.mdb
+/home/ivan/monodevelop/manegementCompany/manegementCompany/bin/manegementCompany.dll
+/home/ivan/monodevelop/manegementCompany/manegementCompany/obj/Debug/manegementCompany.dll
+/home/ivan/monodevelop/manegementCompany/manegementCompany/obj/Debug/manegementCompany.dll.mdb

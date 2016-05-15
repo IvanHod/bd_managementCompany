@@ -1,11 +1,10 @@
 ﻿<Properties StartupItem="manegementCompany/manegementCompany.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="/usr/bin/chromium" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="manegementCompany/Views/Shared/_Layout.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="manegementCompany/Views/Organization/Create.cshtml">
     <Files>
-      <File FileName="manegementCompany/Controllers/HomeController.cs" Line="1" Column="1" />
-      <File FileName="manegementCompany/Web.config" Line="22" Column="40" />
-      <File FileName="manegementCompany/Controllers/PersonController.cs" Line="22" Column="21" />
-      <File FileName="manegementCompany/Views/Shared/_Layout.cshtml" Line="11" Column="15" />
+      <File FileName="manegementCompany/Controllers/PersonController.cs" Line="1" Column="1" />
+      <File FileName="manegementCompany/Views/Organization/Create.cshtml" Line="52" Column="72" />
+      <File FileName="manegementCompany/Models/Organization.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

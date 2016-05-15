@@ -8,7 +8,6 @@ namespace web.Models
 	{
 		public Person ()
 		{
-			
 		}
 
 		[Column("id")]

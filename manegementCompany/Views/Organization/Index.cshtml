@@ -1,0 +1,16 @@
+@using web.Models;
+﻿@model IEnumerable < Person >
+
+@{
+    ViewBag.Title = "Организации";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Организации</h2>
+
+<script>
+	function setActionTab() {
+		$('nav li').removeClass('active');
+		$('#organization').addClass("active");
+	}
+</script>
