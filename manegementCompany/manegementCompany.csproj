@@ -83,6 +83,7 @@
     <Folder Include="contextDbs\" />
     <Folder Include="Views\Person\" />
     <Folder Include="sql\" />
+    <Folder Include="Session\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\HomeController.cs" />
@@ -95,6 +96,15 @@
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Controllers\OrganizationController.cs" />
     <Compile Include="Models\Address.cs" />
+    <Compile Include="Controllers\RegionController.cs" />
+    <Compile Include="contextDbs\AddressContext.cs" />
+    <Compile Include="Models\Region.cs" />
+    <Compile Include="Models\City.cs" />
+    <Compile Include="Controllers\CityController.cs" />
+    <Compile Include="Session\OrganizationSession.cs" />
+    <Compile Include="Models\Service.cs" />
+    <Compile Include="contextDbs\ServiceContext.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
@@ -185,6 +195,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\select2.min.css" />
+    <Content Include="Views\Service\Create.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

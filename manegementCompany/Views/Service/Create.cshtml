@@ -1,0 +1,49 @@
+﻿@using web.Models;
+﻿@model Service
+
+@{
+    ViewBag.Title = "Создание услуги";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using(Html.BeginForm()) 
+{
+<div class="row form-group">
+	<label class="col-md-2">Название: </label>
+	<div class="col-md-10">
+		@Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.name)
+	</div>
+</div>
+<div class="row form-group">
+	<label class="col-md-2">Описание: </label>
+	<div class="col-md-10">
+		@Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.description)
+	</div>
+</div>
+<div class="row form-group">
+	<label class="col-md-2">Цена: </label>
+	<div class="col-md-2">
+		@Html.EditorFor(model => model.description, new { htmlAttributes = new { @type="number", @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.description)
+	</div>
+	<label class="col-md-2">Период: </label>
+	<div class="col-md-2">
+		@Html.EditorFor(model => model.description, new { htmlAttributes = new { @type="number", @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.description)
+	</div>
+	<label class="col-md-2">
+		<input type="checkbox" name="isGeneral" /> Услуга обязательна
+	</label>
+</div>
+<div class="row">
+	<div class="col-md-12 text-right">
+		<div class="btn-group">
+			<a href="/Organization" class="btn btn-danger">Отмена</a>
+			<input type="submit" class="btn btn-success" value="Сохранить" />
+		</div>
+	</div>
+</div>
+}
+

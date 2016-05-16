@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using web.Models;
 using web.ContextDbs;
+using web.Session;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 
 namespace manegementCompany.Controllers
 {
@@ -19,7 +22,11 @@ namespace manegementCompany.Controllers
 
         public ActionResult Index()
         {
-            return View ();
+			if (OrganizationSession.isSession ()) {
+				Organization org = db.Organizations.Find (OrganizationSession.session());
+				return View (org);
+			} else
+				return RedirectToAction ("Index", "Home");
         }
 
         public ActionResult Details(int id)
@@ -90,5 +97,20 @@ namespace manegementCompany.Controllers
                 return View ();
             }
         }
+
+		[HttpPost]
+		public ActionResult Authorization(string email, string password)
+		{
+			try {
+				Organization org = db.authorization(email, password);
+				if( org != null ) {
+					OrganizationSession.newSession(org.id);
+					return RedirectToAction("Index");
+				} else
+					return View ();
+			} catch {
+				return View ();
+			}
+		}
     }
 }

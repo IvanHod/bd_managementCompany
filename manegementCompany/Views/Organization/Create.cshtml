@@ -61,7 +61,7 @@
 				<label>Выберете район: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="legalAddress[region]" class="select2 form-control"></select>
+				<select name="legalAddress[region]" data-type="Region" class="select2 form-control Region"></select>
 			</div>
 		</div>
 		<div class="row">
@@ -69,7 +69,7 @@
 				<label>Выберете город: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="legalAddress[city]" class="select2 form-control"></select>
+				<select name="legalAddress[city]" data-type="City" class="select2 form-control City"></select>
 			</div>
 		</div>
 		<div class="row">
@@ -77,7 +77,7 @@
 				<label>Выберете улицу: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="legalAddress[street]" class="select2 form-control"></select>
+				<select name="legalAddress[street]" data-type="Street" class="select2 form-control Street"></select>
 			</div>
 		</div>
 		<div class="row">
@@ -85,7 +85,7 @@
 				<label>Выберете дом: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="legalAddress[house]" class="select2 form-control"></select>
+				<select name="legalAddress[house]" data-type="House" class="select2 form-control House"></select>
 			</div>
 		</div>
 	</div>
@@ -96,7 +96,7 @@
 				<label>Выберете район: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="address[region]" class="select2 form-control"></select>
+				<select name="address[region]" data-type="Region" class="select2 form-control Region"></select>
 			</div>
 		</div>
 		<div class="row">
@@ -104,7 +104,7 @@
 				<label>Выберете город: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="address[city]" class="select2 form-control"></select>
+				<select name="address[city]" data-type="City" class="select2 form-control City"></select>
 			</div>
 		</div>
 		<div class="row">
@@ -112,7 +112,7 @@
 				<label>Выберете улицу: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="address[street]" class="select2 form-control"></select>
+				<select name="address[street]" data-type="Street" class="select2 form-control Street"></select>
 			</div>
 		</div>
 		<div class="row">
@@ -120,7 +120,7 @@
 				<label>Выберете дом: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="address[house]" class="select2 form-control"></select>
+				<select name="address[house]" data-type="House" class="select2 form-control House"></select>
 			</div>
 		</div>
 	</div>
@@ -153,7 +153,7 @@
 		<label>ОКТМО:</label>
 	</div>
 	<div class="col-md-4">
-		@Html.PasswordFor(model => model.KPP, new {@class="form-control"})
+		@Html.PasswordFor(model => model.OKTMO, new {@class="form-control"})
 		@Html.ValidationMessageFor(model => model.OKTMO)
 	</div>
 </div>
@@ -169,12 +169,58 @@
 
 
 <script>
-console.log($(".select2"))
-	$.ajax({url: 'select2/'});
+
+    $.fn.select2.defaults.set('templateSelection', function(a) {
+        return a.text || a.name || a.value;
+    });
+    $.fn.select2.defaults.set('templateResult', function(a) {
+        return a.text || a.name || a.value;
+    });
+
 	$(".select2").select2({tags: true});
-	$(".select2").on("select2:select", function (e) {
-		console.log("select2:select", $(e.currentTarget).val()); 
+
+    var elements = ['Region', 'City', 'Street', 'House']
+
+    elements.forEach(function(el) {
+		$.ajax({
+			url: '/' + el + '/Select',
+			type: 'GET'
+		}).done(function(res){
+			$('select.' + el).select2({data: res});
+			console.log(res);
+		});
+    })
+
+	$(".select2.Region").on("select2:select", function (e) {
+		var val = $(e.currentTarget).val();
+		$.ajax({
+			url: '/Region/Create',
+			type: 'POST',
+			data: { name: val, city: '' }
+		}).done(function(res) {
+			console.log(res); 
+		}).error(function(err){
+			console.error(err);
+		});
 	});
+
+	$(".select2:not(.Region)").on("select2:select", function (e) {
+		var val = $(e.currentTarget).val(),
+			type = $(e.currentTarget).data('type');
+		$.ajax({
+			url: '/' + type + '/Create',
+			type: 'POST',
+			data: { 
+				parent: $(e.target).closest('.row').prev().find('select').val(), 
+				name: val
+			}
+		}).done(function(res) {
+			console.log(res); 
+		}).error(function(err){
+			console.error(err);
+		});
+	});
+
 	function setActionTab() {
 		$('nav li').removeClass('active');
 		$('#organization').addClass("active");

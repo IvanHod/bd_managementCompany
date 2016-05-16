@@ -21,7 +21,7 @@
 			<tr>
 				<td>@Html.DisplayNameFor(model => model.firstName)</td>
 				<td>
-						@Html.EditorFor(model => model.firstName)
+						@Html.EditorFor(model => model.firstName, new { htmlAttributes = new { @class = "form-control" } })
 						@Html.ValidationMessageFor(model => model.firstName)
 				</td>
 			</tr>

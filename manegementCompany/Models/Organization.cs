@@ -48,14 +48,7 @@ namespace web.Models
 		public string email { get; set; }
 
 		[Column("psw")]
-		public string password {
-			get {
-				return "";
-			}
-			set {
-				password = GetHashString (password);
-			}
-		}
+		public string password { get; set; }
 
 		string GetHashString(string s)  
 		{  

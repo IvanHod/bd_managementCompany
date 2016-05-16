@@ -4,11 +4,20 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
+using web.ContextDbs;
+using web.Models;
 
 namespace manegementCompany.Controllers
 {
 	public class HomeController : Controller
 	{
+		private PeopleContext db;
+
+		public HomeController()
+		{
+			db = new PeopleContext ();
+		}
+
 		public ActionResult Index ()
 		{
 			var mvcName = typeof(Controller).Assembly.GetName ();
@@ -17,7 +26,9 @@ namespace manegementCompany.Controllers
 			ViewData ["Version"] = mvcName.Version.Major + "." + mvcName.Version.Minor;
 			ViewData ["Runtime"] = isMono ? "Mono" : ".NET";
 
-			return View ();
+			List<Organization> organizations = this.db.Organizations.ToList ();
+
+			return View (organizations);
 		}
 	}
 }

@@ -1,14 +1,73 @@
 @using web.Models;
-﻿@model IEnumerable < Person >
+﻿@model Organization
 
 @{
     ViewBag.Title = "Организации";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Организации</h2>
-
+<h2>Организация "@Model.fullName"</h2>
+<div class="row">
+	<div class="col-md-4">
+		<h3>Реквизиты организации:</h3>
+		<div class="row">
+			<div class="col-md-4"><label>ОГРН:</label></div>
+			<div class="col-md-6">@Model.OGRN</div>
+		</div>
+		<div class="row">
+			<label class="col-md-4">ИНН:</label>
+			<div class="col-md-6">@Model.INN</div>
+		</div>
+		<div class="row">
+			<label class="col-md-4">KPP: </label>
+			<div class="col-md-6">@Model.KPP</div>
+		</div>
+		<div class="row">
+			<label class="col-md-4">OKTMO: </label>
+			<div class="col-md-6">@Model.OKTMO</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4"><label>Телефон:</label></div>
+			<div class="col-md-6">@Model.phone</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4"><label>E-mail:</label></div>
+			<div class="col-md-6">@Model.email</div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<h3>Дома организации:
+			<a href="/House/Create" class="btn btn-xs btn-success">Создать</a>
+		</h3>
+		<table class="table">
+			<tbody id="houses"></tbody>
+		</table>
+	</div>
+	<div class="col-md-4">
+		<h3>Предоставляемые услуги:
+			<a href="/Service/Create" class="btn btn-xs btn-success">Создать</a>
+		</h3>
+		<table class="table">
+			<tbody id="services"></tbody>
+		</table>
+	</div>
+</div>
 <script>
+
+	$.ajax({
+		url: "/Service",
+		type: "GET"
+	}).done(function(res) {
+		console.log(res);
+	})
+
+	$.ajax({
+		url: "/House",
+		type: "GET"
+	}).done(function(res) {
+		console.log(res);
+	})
+
 	function setActionTab() {
 		$('nav li').removeClass('active');
 		$('#organization').addClass("active");

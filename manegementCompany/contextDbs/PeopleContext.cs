@@ -21,6 +21,15 @@ namespace web.ContextDbs
 		public DbSet <Organization> Organizations { get; set; }
 
 		public DbSet <Address> Addresses { get; set; }
+
+		public Organization authorization(string email, string password) {
+			Organization organization = null;
+			foreach (Organization org in Organizations) {
+				if( org.email == email && org.password == password )
+					organization = org;
+			}
+			return organization;
+		}
 	}
 }
 
