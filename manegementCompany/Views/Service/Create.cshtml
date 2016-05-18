@@ -25,13 +25,13 @@
 <div class="row form-group">
 	<label class="col-md-2">Цена: </label>
 	<div class="col-md-2">
-		@Html.EditorFor(model => model.description, new { htmlAttributes = new { @type="number", @class = "form-control" } })
-		@Html.ValidationMessageFor(model => model.description)
+		@Html.EditorFor(model => model.price, new { htmlAttributes = new { @type="number", @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.price)
 	</div>
 	<label class="col-md-2">Период: </label>
 	<div class="col-md-2">
-		@Html.EditorFor(model => model.description, new { htmlAttributes = new { @type="number", @class = "form-control" } })
-		@Html.ValidationMessageFor(model => model.description)
+		@Html.EditorFor(model => model.period, new { htmlAttributes = new { @type="number", @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.period)
 	</div>
 	<label class="col-md-2">
 		<input type="checkbox" name="isGeneral" /> Услуга обязательна

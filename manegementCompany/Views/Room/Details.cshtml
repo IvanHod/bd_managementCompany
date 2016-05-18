@@ -1,0 +1,17 @@
+﻿@using web.Models;
+@model Room
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3 id="room">Просмотр Квартиры №@Model.number</h3>
+@if(@Model.owner == 0) {
+<div>Собственника данной квартиры нет, <a href="/Owner/Create/@Model.id">Создать</a>?</div>
+} else {
+	<a href="/Owner/Details/@Model.owner">Просмотр</a>
+}
+
+<script>
+</script>
+

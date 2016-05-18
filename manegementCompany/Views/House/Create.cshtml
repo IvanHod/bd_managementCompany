@@ -1,0 +1,76 @@
+﻿@using web.Models;
+@model House
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3>Создание дома</h3>
+
+@using(Html.BeginForm()) 
+{
+<div class="row form-group">
+	<label class="col-md-2">Номер дома:</label>
+	<div class="col-md-4">
+		@Html.EditorFor(model => model.number, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.number)
+	</div>
+</div>
+<div class="row form-group">
+	<label class="col-md-2">Кол-во этажей:</label>
+	<div class="col-md-2">
+		@Html.EditorFor(model => model.countFloor, new { htmlAttributes = new { @type="number", @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.countFloor)
+	</div>
+	<label class="col-md-2">Кол-во подъездов:</label>
+	<div class="col-md-2">
+		@Html.EditorFor(model => model.countPorch, new { htmlAttributes = new { @type="number", @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.countPorch)
+	</div>
+	<label class="col-md-2">Кол-во комнат на площадке:</label>
+	<div class="col-md-2">
+		@Html.EditorFor(model => model.countRoom, new { htmlAttributes = new { @type="number", @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.countRoom)
+	</div>
+</div>
+<div class="row form-group">
+	<label class="col-md-2">Область</label>
+	<div class="col-md-2">
+		<select class="form-control"></select>
+	</div>
+	<label class="col-md-2">Город</label>
+	<div class="col-md-2">
+		<select class="form-control"></select>
+	</div>
+	<label class="col-md-2">Улица</label>
+	<div class="col-md-2">
+		<select class="form-control"></select>
+	</div>
+</div>
+<div class="row form-group">
+	<label class="col-md-2">Предоставляемые услуги</label>
+	<div class="col-md-4">
+		<select id="services" name="services" class="form-control select2" multiple="multiple"></select>
+	</div>
+	<label><input name="autoGeneration" type="checkbox" checked="checked" /> Автогенерация квартир</label>
+</div>
+<div class="row form-group">
+	<div class="col-md-12 text-right">
+		<div class="btn-group">
+			<input type="button" class="btn btn-danger" value="Отменить" />
+			<input type="submit" class="btn btn-success" value="Сохранить" />
+		</div>
+	</div>
+</div>
+}
+
+<script>
+$(".select2").select2({width: '100%'});
+
+$.ajax({
+	url: '/Service/Select',
+	type: 'GET'
+}).done(function(res) {
+	$('#services').select2({data: res});
+} )
+</script>

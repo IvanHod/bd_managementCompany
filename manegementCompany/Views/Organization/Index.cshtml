@@ -8,8 +8,8 @@
 
 <h2>Организация "@Model.fullName"</h2>
 <div class="row">
-	<div class="col-md-4">
-		<h3>Реквизиты организации:</h3>
+	<div class="col-md-3">
+		<h3>Реквизиты:</h3>
 		<div class="row">
 			<div class="col-md-4"><label>ОГРН:</label></div>
 			<div class="col-md-6">@Model.OGRN</div>
@@ -35,11 +35,17 @@
 			<div class="col-md-6">@Model.email</div>
 		</div>
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-5">
 		<h3>Дома организации:
 			<a href="/House/Create" class="btn btn-xs btn-success">Создать</a>
 		</h3>
 		<table class="table">
+			<thead>
+				<tr>
+					<td>Номер дома</td>
+					<td>Кол-во этажей</td>
+				</tr>
+			</thead>
 			<tbody id="houses"></tbody>
 		</table>
 	</div>
@@ -48,6 +54,12 @@
 			<a href="/Service/Create" class="btn btn-xs btn-success">Создать</a>
 		</h3>
 		<table class="table">
+			<thead>
+				<tr>
+					<td>Наименование</td>
+					<td>Цена</td>
+				</tr>
+			</thead>
 			<tbody id="services"></tbody>
 		</table>
 	</div>
@@ -58,14 +70,24 @@
 		url: "/Service",
 		type: "GET"
 	}).done(function(res) {
-		console.log(res);
+		res.forEach(function(item){
+			var tr = '<tr><td><a href="Service/Details/' + item.id + '">' + item.name + '</a></td>' + 
+				'<td>' + item.price + '</td></tr>';
+			$('#services').append(tr);
+		});
+		if(!res[0]) $('#services').append('<tr><td colspan="2">Нет услуг</td></tr>');
 	})
 
 	$.ajax({
-		url: "/House",
+		url: "/House/Select",
 		type: "GET"
 	}).done(function(res) {
-		console.log(res);
+		res.forEach(function(item){
+			var tr = '<tr><td><a href="House/Details/' + item.id + '">' + item.number + '</a></td>' + 
+				'<td>' + item.countFloor + '</td></tr>';
+			$('#houses').append(tr);
+		});
+		if(!res[0]) $('#houses').append('<tr><td colspan="2">Нет домов</td></tr>');
 	})
 
 	function setActionTab() {

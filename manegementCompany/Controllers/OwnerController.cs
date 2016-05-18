@@ -3,43 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using web.ContextDbs;
 using web.Models;
+using web.ContextDbs;
 
 namespace manegementCompany.Controllers
 {
-    public class ServiceController : Controller
-	{
-		private ServiceContext db;
+    public class OwnerController : Controller
+    {
+		private OwnerContext db;
 
-		public ServiceController()
+		private HouseContext houseDb;
+
+		public OwnerController()
 		{
-			db = new ServiceContext ();
+			db = new OwnerContext ();
+			houseDb = new HouseContext ();
 		}
 
-		public JsonResult Index()
-		{
-			List<Service> services = db.Services.ToList ();
-			return Json (services, JsonRequestBehavior.AllowGet);
+        public ActionResult Index()
+        {
+            return View ();
         }
 
         public ActionResult Details(int id)
         {
-            return View ();
+			return View (new Owner(id));
         }
 
-        public ActionResult Create()
-        {
-            return View ();
-        } 
+		public ActionResult Create(string id)
+		{
+			return View (new Owner(Int32.Parse(id)));
+		} 
 
         [HttpPost]
-        public ActionResult Create([Bind (Include = "name,description,price,period,isGeneral")]Service s)
+		public ActionResult Create([Bind (Include = "name,lastName,patronimic,phone,email,room")]Owner o)
         {
             try {
-				db.Services.Add(s);
+				db.owners.Add(o);
 				db.SaveChanges();
-                return RedirectToAction ("Index", "Organization");
+				houseDb.rooms.Find(o.room).owner = o.id;
+				houseDb.SaveChanges();
+				return RedirectToAction ("Details/"+o.room, "Room");
             } catch {
                 return View ();
             }
@@ -74,11 +78,5 @@ namespace manegementCompany.Controllers
                 return View ();
             }
         }
-
-		public JsonResult Select()
-		{
-			List<Service> services = db.Services.ToList ();
-			return Json (services, JsonRequestBehavior.AllowGet);
-		}
     }
 }

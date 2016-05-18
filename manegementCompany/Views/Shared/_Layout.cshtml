@@ -25,6 +25,14 @@
   </div>
 </nav>
 <div class="container">
+<script>
+    $.fn.select2.defaults.set('templateSelection', function(a) {
+        return a.text || a.name || a.value;
+    });
+    $.fn.select2.defaults.set('templateResult', function(a) {
+        return a.text || a.name || a.value;
+    });
+</script>
 	@RenderBody()
 </div>
 </body>

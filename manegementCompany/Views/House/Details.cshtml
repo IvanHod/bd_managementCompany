@@ -1,0 +1,39 @@
+﻿@using web.Models;
+@model House
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3 id="house" data-floor=@Model.countFloor data-rooms=@Model.rooms>Просмотр дома</h3>
+<div class="row">
+	<div class="col-md-12">
+		<table class="table">
+		<tbody>
+		@for(int i = 0; i< @Model.countFloor; i++) {
+			<tr><td>Этаж №@i </td></tr>
+		}
+		</tbody>
+		</table>
+	</div>
+</div>
+
+<script>
+	var rooms = [];
+	var mass = $('#house').data('rooms').replace(/\,$/, '');
+	$.ajax({
+		url: '/Room/Select',
+		type: 'GET',
+		data: {rooms: mass}
+	}).done(function(res){
+		var floor = $('#house').data("floor")*1;
+		res.forEach(function(r){
+			var color = r.owner ? 'success' : 'default';
+			var td='<td><a href="/Room/Details/'+r.id+'" class="label label-'+color+'">' + r.number + '</a></td>';
+			$('tbody').children().eq(r.floor).append(td);
+		})
+		console.log(res);
+	})
+
+</script>
+

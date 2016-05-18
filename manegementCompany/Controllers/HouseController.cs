@@ -3,29 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using web.ContextDbs;
 using web.Models;
+using web.ContextDbs;
 
 namespace manegementCompany.Controllers
 {
-    public class ServiceController : Controller
+    public class HouseController : Controller
 	{
-		private ServiceContext db;
+		private HouseContext db;
 
-		public ServiceController()
+		public HouseController()
 		{
-			db = new ServiceContext ();
+			db = new HouseContext ();
 		}
 
-		public JsonResult Index()
-		{
-			List<Service> services = db.Services.ToList ();
-			return Json (services, JsonRequestBehavior.AllowGet);
+        public ActionResult Index()
+        {
+            return View ();
         }
 
         public ActionResult Details(int id)
         {
-            return View ();
+			House house = db.houses.Find (id);
+            return View (house);
         }
 
         public ActionResult Create()
@@ -34,11 +34,34 @@ namespace manegementCompany.Controllers
         } 
 
         [HttpPost]
-        public ActionResult Create([Bind (Include = "name,description,price,period,isGeneral")]Service s)
+		public ActionResult Create([Bind (Include = "number,countFloor,countPorch,CountRoom,services")]MHouse h)
         {
-            try {
-				db.Services.Add(s);
+			try {
+				House house = new House(h);
+				db.houses.Add(house);
 				db.SaveChanges();
+				string autoGeneration = Request.Params["autoGeneration"];
+				string rooms = "";
+				if( autoGeneration == "on" ) {
+					int numberRoom = 1;
+					List<Room> rms = new List<Room> {};
+					for(int po = 0; po < h.countPorch; po++) {
+						for(int fl = 0; fl < h.countFloor; fl++) {
+							for(int ro = 0; ro < h.countRoom; ro++) {
+								Room r = new Room(numberRoom, fl, ro+1);
+								rms.Add(r);
+								db.rooms.Add(r);
+								numberRoom++;
+							}
+						}
+					}
+					db.SaveChanges();
+					foreach(Room r in rms) {
+						rooms += r.id + ",";
+					}
+					house.rooms = rooms;
+					db.SaveChanges();
+				}
                 return RedirectToAction ("Index", "Organization");
             } catch {
                 return View ();
@@ -73,12 +96,12 @@ namespace manegementCompany.Controllers
             } catch {
                 return View ();
             }
-        }
+		}
 
 		public JsonResult Select()
 		{
-			List<Service> services = db.Services.ToList ();
-			return Json (services, JsonRequestBehavior.AllowGet);
+			List<House> houses = db.houses.ToList ();
+			return Json (houses, JsonRequestBehavior.AllowGet);
 		}
     }
 }

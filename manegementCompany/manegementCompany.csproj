@@ -105,6 +105,15 @@
     <Compile Include="Models\Service.cs" />
     <Compile Include="contextDbs\ServiceContext.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Models\AuthModel.cs" />
+    <Compile Include="Models\Owner.cs" />
+    <Compile Include="Models\House.cs" />
+    <Compile Include="Controllers\HouseController.cs" />
+    <Compile Include="contextDbs\HouseContext.cs" />
+    <Compile Include="Models\Room.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Controllers\OwnerController.cs" />
+    <Compile Include="contextDbs\OwnerContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
@@ -196,6 +205,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\select2.min.css" />
     <Content Include="Views\Service\Create.cshtml" />
+    <Content Include="Views\House\Create.cshtml" />
+    <Content Include="Views\House\Details.cshtml" />
+    <Content Include="Views\Room\Details.cshtml" />
+    <Content Include="Views\Owner\Create.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

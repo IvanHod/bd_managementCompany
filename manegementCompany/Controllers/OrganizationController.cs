@@ -22,9 +22,9 @@ namespace manegementCompany.Controllers
 
         public ActionResult Index()
         {
-			if (OrganizationSession.isSession ()) {
-				Organization org = db.Organizations.Find (OrganizationSession.session());
-				return View (org);
+			AuthModel auth = (AuthModel)Session ["Model"];
+			if ( auth != null && auth.isOrganization() ) {
+				return View ( auth.organization );
 			} else
 				return RedirectToAction ("Index", "Home");
         }
@@ -104,7 +104,7 @@ namespace manegementCompany.Controllers
 			try {
 				Organization org = db.authorization(email, password);
 				if( org != null ) {
-					OrganizationSession.newSession(org.id);
+					Session["Model"] = new AuthModel(org);
 					return RedirectToAction("Index");
 				} else
 					return View ();

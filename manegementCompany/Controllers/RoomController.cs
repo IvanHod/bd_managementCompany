@@ -3,29 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using web.ContextDbs;
 using web.Models;
+using web.ContextDbs;
 
 namespace manegementCompany.Controllers
 {
-    public class ServiceController : Controller
-	{
-		private ServiceContext db;
+    public class RoomController : Controller
+    {
+		private HouseContext db;
 
-		public ServiceController()
+		public RoomController()
 		{
-			db = new ServiceContext ();
+			db = new HouseContext ();
 		}
 
-		public JsonResult Index()
-		{
-			List<Service> services = db.Services.ToList ();
-			return Json (services, JsonRequestBehavior.AllowGet);
+        public ActionResult Index()
+        {
+            return View ();
         }
 
         public ActionResult Details(int id)
         {
-            return View ();
+			return View (db.rooms.Find(id));
         }
 
         public ActionResult Create()
@@ -34,12 +33,10 @@ namespace manegementCompany.Controllers
         } 
 
         [HttpPost]
-        public ActionResult Create([Bind (Include = "name,description,price,period,isGeneral")]Service s)
+        public ActionResult Create(FormCollection collection)
         {
             try {
-				db.Services.Add(s);
-				db.SaveChanges();
-                return RedirectToAction ("Index", "Organization");
+                return RedirectToAction ("Index");
             } catch {
                 return View ();
             }
@@ -77,8 +74,16 @@ namespace manegementCompany.Controllers
 
 		public JsonResult Select()
 		{
-			List<Service> services = db.Services.ToList ();
-			return Json (services, JsonRequestBehavior.AllowGet);
+			string roomsStr = Request.Params ["rooms"];
+			string comma = ",";
+			string[] rooms = roomsStr.Split (',');
+			//List<int> rooms = Request.Params ["rooms"].Split (",", 3);
+			List<Room> rms = new List<Room> {};
+			foreach(string id in rooms) {
+				int _id = Int32.Parse (id);
+				rms.Add(db.rooms.Find(_id));
+			}
+			return Json (rms, JsonRequestBehavior.AllowGet);
 		}
     }
 }

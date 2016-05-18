@@ -1,0 +1,61 @@
+﻿@using web.Models;
+@model Owner
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3>Создание собственника</h3>
+
+@using(Html.BeginForm()) 
+{
+<div class="row form-group">
+	<label class="col-md-2">Фамилия:</label>
+	<div class="col-md-2">
+		@Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.name)
+	</div>
+	<label class="col-md-2">Имя:</label>
+	<div class="col-md-2">
+		@Html.EditorFor(model => model.lastName, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.lastName)
+	</div>
+	<label class="col-md-2">Отчество:</label>
+	<div class="col-md-2">
+		@Html.EditorFor(model => model.patronimic, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.patronimic)
+	</div>
+</div>
+<div class="row form-group">
+	<label class="col-md-2">Телефон:</label>
+	<div class="col-md-2">
+		@Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.phone)
+	</div>
+	<label class="col-md-2">E-mail:</label>
+	<div class="col-md-2">
+		@Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.email)
+	</div>
+	<input type="hidden" name="room" value="@Model.room" />
+</div>
+<div class="row form-group">
+	<div class="col-md-12 text-right">
+		<div class="btn-group">
+			<input type="button" class="btn btn-danger" value="Отменить" />
+			<input type="submit" class="btn btn-success" value="Сохранить" />
+		</div>
+	</div>
+</div>
+}
+
+<script>
+$(".select2").select2({width: '100%'});
+
+$.ajax({
+	url: '/Service/Select',
+	type: 'GET'
+}).done(function(res) {
+	$('#services').select2({data: res});
+} )
+</script>
