@@ -10,6 +10,14 @@ namespace web.Models
 		{
 		}
 
+		public void editS(Service s)
+		{
+			name = s.name;
+			description = s.description;
+			price = s.price;
+			period = s.period;
+		}
+
 		[Column("id")]
 		public int id { get; set; }
 

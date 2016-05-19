@@ -30,7 +30,7 @@ namespace manegementCompany.Controllers
         {
 			AuthModel auth = (AuthModel)Session ["Model"];
 			if ( auth != null && auth.isOrganization() ) {
-				return View ( auth.organization );
+				return View ( db.Organizations.Find(auth.getId()) );
 			} else
 				return RedirectToAction ("Index", "Home");
         }

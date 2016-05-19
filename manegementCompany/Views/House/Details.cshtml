@@ -7,7 +7,7 @@
 }
 <h3 id="house" data-floor=@Model.countFloor data-rooms=@Model.rooms><a href="/Organization">Назад </a>Просмотр дома
 	<small><a href="/House/Edit/@Model.id">Редактировать</a></small>
-	<a class="btn btn-danger pull-right">Удалить</a>
+	<a class="btn btn-danger pull-right" href="/House/Delete/@Model.id">Удалить</a>
 </h3>
 <div class="row">
 	<div class="col-md-12">
@@ -35,7 +35,6 @@
 			var td='<td><a href="/Room/Details/'+r.id+'" class="label label-'+color+'">' + r.number + '</a></td>';
 			$('tbody').children().eq(r.floor).append(td);
 		})
-		console.log(res);
 	})
 
 </script>

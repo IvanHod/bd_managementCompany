@@ -11,10 +11,12 @@ namespace manegementCompany.Controllers
     public class HouseController : Controller
 	{
 		private HouseContext db;
+		private OwnerContext ownerDb;
 
 		public HouseController()
 		{
 			db = new HouseContext ();
+			ownerDb = new OwnerContext ();
 		}
 
         public ActionResult Index()
@@ -90,9 +92,30 @@ namespace manegementCompany.Controllers
             }
         }
 
-        public ActionResult Delete(int id)
+		public ActionResult Delete(int id)
         {
-            return View ();
+			House house = db.houses.Find(id);
+			string[] roomsId = house.rooms.Split(',');
+			foreach (string idRoom in roomsId)
+			{
+				if (idRoom != "" && idRoom != " ") {
+					Room room = db.rooms.Find(Int16.Parse(idRoom));
+					if (room != null)
+					{
+						if (room.owner > 0)
+						{
+							Owner owner = ownerDb.owners.Find(room.owner);
+							ownerDb.owners.Remove(owner);
+							ownerDb.SaveChanges();
+						}
+						db.rooms.Remove(room);
+						db.SaveChanges();
+					}
+				}
+			}
+			db.houses.Remove(house);
+			db.SaveChanges();
+			return RedirectToAction("Index", "Organization");
         }
 
         [HttpPost]

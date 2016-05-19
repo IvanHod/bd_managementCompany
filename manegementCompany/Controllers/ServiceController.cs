@@ -24,8 +24,9 @@ namespace manegementCompany.Controllers
         }
 
         public ActionResult Details(int id)
-        {
-            return View ();
+		{
+			Service ser = db.Services.Find(id);
+			return View(ser);
         }
 
         public ActionResult Create()
@@ -47,14 +48,17 @@ namespace manegementCompany.Controllers
         
         public ActionResult Edit(int id)
         {
-            return View ();
+			Service ser = db.Services.Find(id);
+			return View (ser);
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+		public ActionResult Edit(int id, [Bind(Include = "name,description,price,period,isGeneral")]Service s)
         {
             try {
-                return RedirectToAction ("Index");
+				db.Services.Find(id).editS(s);
+				db.SaveChanges();
+				return RedirectToAction("Index", "Organization");
             } catch {
                 return View ();
             }

@@ -1,0 +1,96 @@
+﻿@model web.Models.Owner
+
+@{
+    ViewBag.Title = "Редактирование Собственник";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Редактирование Собственник</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+    
+        <input type="hidden" name="organization" value="@Model.organization">
+        <input type="hidden" name="room" value="@Model.room">
+
+        <div class="row">
+            <label class="col-md-2">Имя: </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.name)
+                @Html.ValidationMessageFor(model => model.name)
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-md-2">Фамилия: </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.lastName)
+                @Html.ValidationMessageFor(model => model.lastName)
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-2">Отчество: </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.patronimic)
+                @Html.ValidationMessageFor(model => model.patronimic)
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-md-2">Телефон: </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.phone)
+                @Html.ValidationMessageFor(model => model.phone)
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-2">:e-mail </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.email)
+                @Html.ValidationMessageFor(model => model.email)
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-md-2">Пароль: </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.password)
+                @Html.ValidationMessageFor(model => model.password)
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-md-2">Услуги: </label>
+            <div class="col-md-4">
+                <select id="services" name="services" class="select2 form-control" multiple="multiple"></select>
+                <input type="hidden" id="servicesBeginValues" value="@Model.services">
+            </div>
+         
+        </div>
+
+        <br>
+        <p>
+            <input type="submit" value="Сохранить" />
+        </p>
+    </fieldset>
+}
+
+
+    <a href="/Room/Details/@Model.room">Вернуться</a>
+
+
+<script>
+    $(".select2").select2({ width: '100%' });
+
+    $.ajax({
+        url: '/Service/SelectAll',
+        type: 'GET'
+    }).done(function (res) {
+        var val = $('#servicesBeginValues').val();
+        console.log(val)
+        $('#services').select2({ data: res }).val(val).trigger("change");
+    })
+</script>

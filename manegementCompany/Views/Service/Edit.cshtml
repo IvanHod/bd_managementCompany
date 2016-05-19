@@ -1,0 +1,61 @@
+﻿@model web.Models.Service
+
+@{
+    ViewBag.Title = "Редактирование услуги";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Редактирование услуги</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+
+
+        @Html.HiddenFor(model => model.id)
+
+        <div class="row">
+            <label class="col-md-2">Название: </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.name)
+                @Html.ValidationMessageFor(model => model.name)
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-md-2">Описание: </label>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.description)
+                @Html.ValidationMessageFor(model => model.description)
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-md-2">Цена: </label>
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.price)
+                @Html.ValidationMessageFor(model => model.price)
+            </div>
+        </div>
+
+  
+        <div class="row">
+            <label class="col-md-2">Период: </label>
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.period)
+                @Html.ValidationMessageFor(model => model.period)
+            </div>
+        </div>
+            <p>
+                <br />
+                <input type="submit" value="Сохранить" />
+            </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Вернуться", "Index", "Organization")
+</div>
+

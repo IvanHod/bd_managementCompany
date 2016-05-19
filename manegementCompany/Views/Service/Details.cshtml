@@ -1,0 +1,48 @@
+﻿@model web.Models.Service
+
+@{
+    ViewBag.Title = "Просмотр Услуги";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Просмотр Услуги</h2>
+
+<fieldset>
+   
+
+  
+
+    <div class="row">
+        <label class="col-md-2">Название: </label>
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.name)
+        </div>
+    </div>
+
+    <div class="row">
+        <label class="col-md-2">Описание: </label>
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.description)
+        </div>
+    </div>
+  
+    <div class="row">
+        <label class="col-md-2">Цена: </label>
+        <div class="col-md-2">
+            @Html.DisplayFor(model => model.price)
+        </div>
+    </div>
+
+
+ 
+    <div class="row">
+        <label class="col-md-2">Период: </label>
+        <div class="col-md-2">
+            @Html.DisplayFor(model => model.period)
+        </div>
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Редактировать", "Edit", new { id=Model.id }) |
+    @Html.ActionLink("Вернуться", "Index","Organization")
+</p>

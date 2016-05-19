@@ -6,12 +6,44 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h3 id="room">Просмотр Квартиры №@Model.number</h3>
-@if(@Model.owner == 0) {
-<div>Собственника данной квартиры нет, <a href="/Owner/Create/@Model.id">Создать</a>?</div>
-} else {
-	<a href="/Owner/Details/@Model.owner">Просмотр</a>
-}
+<div class="row">
+        <label class="col-md-2">Номер: </label>
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.number)
+        </div>
+    </div>
 
+    <div class="row">
+        <label class="col-md-2">Этаж: </label>
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.floor)
+        </div>
+    </div>
+  
+    <div class="row">
+        <label class="col-md-2">Кол-во комнат: </label>
+        <div class="col-md-2">
+            @Html.DisplayFor(model => model.countRoom)
+        </div>
+    </div>
+    
+    <div class="row">
+        <label class="col-md-2">Кол-во жильцов: </label>
+        <div class="col-md-2">
+            @Html.DisplayFor(model => model.countPeople)
+        </div>
+    </div>
+
+    <div class="row">
+        <label class="col-md-2">Собственник: </label>
+        <div class="col-md-2">
+        	@if(@Model.owner == 0) {
+				<div>Собственника данной квартиры нет, <a href="/Owner/Create/@Model.id">Создать</a>?</div>
+			} else {
+				<a href="/Owner/Details/@Model.owner">Просмотр</a>
+			}
+        </div>
+    </div>
 <script>
 </script>
 

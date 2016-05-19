@@ -33,8 +33,11 @@ namespace manegementCompany.Controllers
 				foreach (string id in requestsId) {
 					DBRequest model = db.Requests.Find (Int16.Parse (id));
 					Owner owner = ownerDb.owners.Find (model.owner);
+					string fio = "";
+					if (owner != null)
+						fio = owner.lastName + " " + owner.name + " " + owner.patronimic;
 					string service = serviceDb.Services.Find (model.service).name;
-					requests.Add (new MRequest (model, owner.lastName + " " + owner.name + " " + owner.patronimic, service));
+					requests.Add (new MRequest (model, fio, service));
 				}
 				return View (requests);
 			} else

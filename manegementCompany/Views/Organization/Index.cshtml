@@ -7,8 +7,8 @@
 }
 
 <h2>Организация "@Model.fullName"
-<small><a href="/Organization/Edit/@Model.id">Редактировать</a></small>
-<a href="/Organization/Delete.@Model.id" class="btn btn-danger pull-right">Удалить</a>
+<!--small><a href="/Organization/Edit/@Model.id">Редактировать</a></small-->
+<!--a href="/Organization/Delete.@Model.id" class="btn btn-danger pull-right">Удалить</a-->
 </h2>
 <div class="row">
 	<label class="col-md-2">
@@ -16,7 +16,7 @@
 	</label>
 	<label class="col-md-6" id="new ">
 		@if( @Model.requests != null && @Model.requests != "" ) {
-			<a href="/Request">@Model.requests.Split(',').Length заявка</a>
+			<a href="/Request">@Model.requests.Split(',').Length заявок(и)</a>
 		} else {<span>Нет заявок</span>}
 	</label>
 	<div class="col-md-4 text-right">

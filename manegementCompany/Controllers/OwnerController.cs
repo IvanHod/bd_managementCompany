@@ -30,7 +30,8 @@ namespace manegementCompany.Controllers
 
         public ActionResult Details(int id)
         {
-			return View (new Owner(id));
+			Owner ow = db.owners.Find(id);
+			return View(ow);
         }
 
 		public ActionResult Create(string id)
@@ -58,14 +59,21 @@ namespace manegementCompany.Controllers
         
         public ActionResult Edit(int id)
         {
-            return View ();
+			Owner ow = db.owners.Find(id);
+			return View(ow);
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+		public ActionResult Edit(int id, 
+			[Bind(Include = "name,lastName,patronimic,phone,email,password,room,services")]MOwner o)
         {
-            try {
-                return RedirectToAction ("Index");
+			try {
+				o.id = id;
+				o.organization = ((AuthModel)Session["Model"]).getId();
+				Owner owner = new Owner(o);
+				db.owners.Find(id).editOw(owner);
+				db.SaveChanges();
+				return RedirectToAction("Details/"+owner.room,"Room");
             } catch {
                 return View ();
             }
@@ -102,6 +110,7 @@ namespace manegementCompany.Controllers
 				}
 				return View(auth);
 			} catch {
+				ModelState.AddModelError("notPair", "Не существует введенной комбинации email и пароля");
 				return View (auth);
 			}
 		}

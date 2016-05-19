@@ -33,6 +33,18 @@ namespace web.Models
 			room = own.room;
 		}
 
+		public void editOw(Owner ow)
+		{
+			name = ow.name;
+			lastName = ow.lastName;
+			patronimic = ow.patronimic;
+			phone = ow.phone;
+			email = ow.email;
+			password = ow.password;
+			services = ow.services;
+
+		}
+
 		[Column("id")]
 		public int id { get; set; }
 
