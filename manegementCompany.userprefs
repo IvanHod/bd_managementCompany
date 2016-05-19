@@ -2,15 +2,18 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="/usr/bin/chromium" />
   <MonoDevelop.Ide.Workbench ActiveDocument="manegementCompany/Controllers/OwnerController.cs">
     <Files>
-      <File FileName="manegementCompany/Controllers/OrganizationController.cs" Line="19" Column="4" />
-      <File FileName="manegementCompany/Views/Room/Details.cshtml" Line="10" Column="72" />
-      <File FileName="manegementCompany/Controllers/OwnerController.cs" Line="46" Column="47" />
-      <File FileName="manegementCompany/Views/Owner/Create.cshtml" Line="15" Column="69" />
-      <File FileName="manegementCompany/Controllers/HouseController.cs" Line="13" Column="3" />
+      <File FileName="manegementCompany/Controllers/OrganizationController.cs" Line="1" Column="1" />
+      <File FileName="manegementCompany/Views/Owner/Create.cshtml" Line="1" Column="1" />
+      <File FileName="manegementCompany/Models/Owner.cs" Line="1" Column="1" />
+      <File FileName="manegementCompany/Controllers/PersonController.cs" Line="1" Column="1" />
+      <File FileName="manegementCompany/Controllers/OwnerController.cs" Line="18" Column="4" />
+      <File FileName="manegementCompany/Controllers/RoomController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/ivan/monodevelop/manegementCompany/manegementCompany/Models/Owner.cs" line="23" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

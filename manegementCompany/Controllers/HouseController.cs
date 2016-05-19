@@ -30,14 +30,21 @@ namespace manegementCompany.Controllers
 
         public ActionResult Create()
         {
-            return View ();
+			AuthModel model = (AuthModel)Session ["Model"];
+			if (model != null)
+				return View ();
+			else
+				return RedirectToAction ("Index", "Home");
         } 
 
         [HttpPost]
-		public ActionResult Create([Bind (Include = "number,countFloor,countPorch,CountRoom,services")]MHouse h)
+		public ActionResult Create(
+			[Bind (Include = "number,countFloor,countPorch,CountRoom,region,city,street,services")]MHouse h)
         {
 			try {
-				House house = new House(h);
+				h.organization = ((AuthModel)Session["Model"]).getId();
+				Address address = new Address ( h.region, "", h.city, h.street, h.number).save();
+				House house = new House(h, address.id);
 				db.houses.Add(house);
 				db.SaveChanges();
 				string autoGeneration = Request.Params["autoGeneration"];
@@ -100,8 +107,14 @@ namespace manegementCompany.Controllers
 
 		public JsonResult Select()
 		{
-			List<House> houses = db.houses.ToList ();
-			return Json (houses, JsonRequestBehavior.AllowGet);
+			int id = ((AuthModel)Session ["Model"]).getId ();
+			List<House> houses = db.houses.ToList();
+			List<MHouse> Mhouses = new List<MHouse> {};
+			foreach (House h in houses) {
+				if( h.organization == id )
+					Mhouses.Add (new MHouse (h));
+			}
+			return Json (Mhouses, JsonRequestBehavior.AllowGet);
 		}
     }
 }

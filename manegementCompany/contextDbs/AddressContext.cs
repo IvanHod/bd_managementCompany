@@ -19,6 +19,8 @@ namespace web.ContextDbs
 		public DbSet <Region> Regions { get; set; }
 
 		public DbSet <City> Cities { get; set; }
+
+		public DbSet <Street> Streets { get; set; }
 	}
 }
 

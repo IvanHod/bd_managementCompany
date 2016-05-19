@@ -36,15 +36,18 @@
 <div class="row form-group">
 	<label class="col-md-2">Область</label>
 	<div class="col-md-2">
-		<select class="form-control"></select>
+		<select id="region" class="form-control select2"></select>
+		<input type="hidden" name="region" />
 	</div>
 	<label class="col-md-2">Город</label>
 	<div class="col-md-2">
-		<select class="form-control"></select>
+		<select id="city" class="form-control select2"></select>
+		<input type="hidden" name="city" />
 	</div>
 	<label class="col-md-2">Улица</label>
 	<div class="col-md-2">
-		<select class="form-control"></select>
+		<select id="street" class="form-control select2"></select>
+		<input type="hidden" name="street" />
 	</div>
 </div>
 <div class="row form-group">
@@ -65,7 +68,102 @@
 }
 
 <script>
-$(".select2").select2({width: '100%'});
+$(".select2").select2({width: '100%', tags: true});
+
+var regions = [],
+	cities = [],
+	streets = [];
+
+var _find = function(mass, callback) {
+	result = null;
+	mass.forEach(function(item) {
+		if( callback(item) ) {
+			result = item
+		}
+	})
+	return result;
+}
+
+$.ajax({
+	url: '/Region/Select',
+	type: 'GET'
+}).done(function(res){
+	regions = res;
+	$('#region').select2({data: res, tags: true}).trigger("change");
+});
+
+$('#region').change(function() {
+	var val = $(this).val(),
+		el = this;
+	if(!val) return;
+	if( _find(regions, function(item) { return item.id == val } ) ) {
+		$('[name="region"]').val( $('#select2-region-container').text() );
+		$.ajax({ url: '/City/Select', type: 'GET', data: {parent: val} })
+		.done(function(res){
+			cities = res;
+			$('#city').empty().select2({data: res, tags: true}).trigger("change");
+		});
+	} else {
+		$.ajax({ url: '/Region/Create', type: 'POST', data: { name: val, city: '' } })
+			.done(function(res) {
+				regions.push(res);
+				$('#region').empty().select2({data: regions, tags: true})
+					.val(res.id).trigger("change");
+				setTimeout(function() {
+					$('[name="region"]').val( $('#select2-region-container').text() );
+				}, 400);
+			});
+	}
+})
+
+$('#city').change(function() {
+	var val = $(this).val(),
+		parent = $('#region').val(),
+		el = this;
+	if(!val) {
+		streets = [];
+		$('#street').empty().trigger('change');
+		return;
+	}
+	if( _find(cities, function(item) { return item.id == val } ) ) {
+		console.log($('#select2-region-container').text())
+		$('[name="city"]').val( $('#select2-city-container').text() );
+		$.ajax({ url: '/Street/Select', type: 'GET', data: {parent: val} })
+			.done(function(res){
+				streets = res;
+				$('#street').empty().select2({data: res, tags: true}).trigger("change");
+			});
+	} else {
+		$.ajax({ url: '/City/Create', type: 'POST', data: { parent: parent, name: val, street: '' } })
+			.done(function(res) {
+				cities.push(res);
+				$('#city').empty().select2({data: cities, tags: true})
+					.val(res.id).trigger("change");
+				setTimeout(function() {
+					$('[name="city"]').val( $('#select2-city-container').text() );
+				}, 400);
+			});
+	}
+});
+
+$('#street').change(function() {
+	var val = $(this).val(),
+		parent = $('#city').val(),
+		el = this;
+	if(!val) return;
+	if( !_find(streets, function(item) { return item.id == val } ) ) {
+		$.ajax({ url: '/Street/Create', type: 'POST', data: { parent: parent, name: val, house: '' } })
+			.done(function(res) {
+				streets.push(res);
+				$('#street').empty().select2({data: streets, tags: true})
+					.val(res.id).trigger("change");
+				setTimeout(function() {
+					$('[name="street"]').val( $('#select2-street-container').text() );
+				}, 400);
+			});
+	} else
+		$('[name="street"]').val( $('#select2-street-container').text() );
+})
 
 $.ajax({
 	url: '/Service/Select',

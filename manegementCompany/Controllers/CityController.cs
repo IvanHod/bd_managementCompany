@@ -28,7 +28,8 @@ namespace manegementCompany.Controllers
 			if (ModelState.IsValid) {
 				db.Cities.Add (city);
 				db.SaveChanges ();
-				Region reg = db.Regions.Find (Request.Params["parent"]);
+				int parent = Int32.Parse (Request.Params["parent"]);
+				Region reg = db.Regions.Find (parent);
 				reg.updateCity (city.id);
 				db.SaveChanges ();
 				return Json(city);
@@ -36,9 +37,16 @@ namespace manegementCompany.Controllers
 			return null;
 		}
 
-		public JsonResult Select()
+		public JsonResult Select(int parent)
 		{
-			List<City> cities = db.Cities.ToList ();
+			List<City> cities = new List<City> { };
+			string stringCities = db.Regions.Find (parent).city;
+			if (stringCities != null && stringCities != "") {
+				string[] citiesStrs = stringCities.Split (',');
+				foreach (string sity in citiesStrs) {
+					cities.Add(db.Cities.Find( Int16.Parse(sity) ));	
+				}
+			}
 			return Json (cities, JsonRequestBehavior.AllowGet);
 		}
     }

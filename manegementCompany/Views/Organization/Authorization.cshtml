@@ -1,0 +1,85 @@
+﻿@using web.Models;
+@model AuthorizationModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf8">
+    <title>Авторизация организации</title>
+    <link rel="stylesheet" href="/Content/bootstrap.min.css">
+    <style>
+    .field-validation-error {
+	    color: #b94a48;
+	}
+	 
+	.field-validation-valid {
+	    display: none;
+	}
+	 
+	input.input-validation-error {
+	    border: 1px solid #b94a48;
+	}
+	 
+	input[type="checkbox"].input-validation-error {
+	    border: 0 none;
+	}
+	 
+	.validation-summary-errors {
+	    color: #b94a48;
+	}
+	 
+	.validation-summary-valid {
+	    display: none;
+	}
+    </style>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-lg-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+ 					<h3 class="panel-title">Авторизация организации на сайте</h3>
+ 				</div>
+ 				<div class="panel-body">
+ 					<div class="row">
+ 						<div class="col-md-12 login-box">
+ 							<form role="form">
+ 								<div class="form-group">
+	 								<div class="input-group">
+	 									<span class="input-group-addon">
+	 										<span class="glyphicon glyphicon-user"></span>
+										</span>
+										@Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+									</div>
+									@Html.ValidationMessageFor(model => model.email)
+ 								</div>
+ 								<div class="form-group">
+									<div class="input-group">
+	 									<span class="input-group-addon">
+	 										<span class="glyphicon glyphicon-lock"></span>
+	 									</span>
+										@Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+									</div>
+									@Html.ValidationMessageFor(model => model.password)
+								</div>
+								@Html.ValidationSummary()
+ 								<div class="col-md-12 text-right">
+ 									<a href="/" class="btn btn-danger">Вернуться</a>
+ 									<input class="btn btn-success" value="Войти" />
+								</div>
+ 							</form>
+ 						</div>
+					</div>
+ 				</div>
+ 			</div>
+ 		</div>
+ 	</div>
+</div>
+</body>
+</html>
+

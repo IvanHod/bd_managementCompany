@@ -9,7 +9,7 @@ using web.ContextDbs;
 namespace manegementCompany.Controllers
 {
     public class OwnerController : Controller
-    {
+	{
 		private OwnerContext db;
 
 		private HouseContext houseDb;
@@ -32,18 +32,21 @@ namespace manegementCompany.Controllers
 
 		public ActionResult Create(string id)
 		{
-			return View (new Owner(Int32.Parse(id)));
+			return View (new MOwner(Int32.Parse(id)));
 		} 
 
         [HttpPost]
-		public ActionResult Create([Bind (Include = "name,lastName,patronimic,phone,email,room")]Owner o)
+		public ActionResult Create(
+			[Bind (Include = "name,lastName,patronimic,phone,email,password,room,services")]MOwner o)
         {
-            try {
-				db.owners.Add(o);
+			try {
+				//if (ModelState.IsValid) {
+				Owner owner = new Owner(o);
+				db.owners.Add(owner);
 				db.SaveChanges();
-				houseDb.rooms.Find(o.room).owner = o.id;
+				houseDb.rooms.Find(owner.room).owner = owner.id;
 				houseDb.SaveChanges();
-				return RedirectToAction ("Details/"+o.room, "Room");
+				return RedirectToAction ("Details/"+owner.room, "Room");
             } catch {
                 return View ();
             }
@@ -78,5 +81,25 @@ namespace manegementCompany.Controllers
                 return View ();
             }
         }
+
+		public ActionResult Authorization(AuthorizationModel auth)
+		{
+			try {
+				if( ModelState.IsValid ) {
+					Owner owner = (from own in db.owners where 
+						own.email == auth.email && own.password == auth.password select own).First();
+					if( owner != null ) {
+						Session["Model"] = new AuthModel(owner);
+						return RedirectToAction("Index");
+					} else {
+						ModelState.AddModelError("notPair", "Не существует введенной комбинации email и пароля");
+						return View (auth);
+					}
+				}
+				return View(auth);
+			} catch {
+				return View (auth);
+			}
+		}
     }
 }

@@ -99,15 +99,20 @@ namespace manegementCompany.Controllers
         }
 
 		[HttpPost]
-		public ActionResult Authorization(string email, string password)
+		public ActionResult Authorization(AuthorizationModel auth)
 		{
 			try {
-				Organization org = db.authorization(email, password);
-				if( org != null ) {
-					Session["Model"] = new AuthModel(org);
-					return RedirectToAction("Index");
-				} else
-					return View ();
+				if( ModelState.IsValid ) {
+					Organization org = db.authorization(auth.email, auth.password);
+					if( org != null ) {
+						Session["Model"] = new AuthModel(org);
+						return RedirectToAction("Index");
+					} else {
+						ModelState.AddModelError("notPair", "Не существует введенной комбинации email и пароля");
+						return View (auth);
+					}
+				}
+				return View(auth);
 			} catch {
 				return View ();
 			}

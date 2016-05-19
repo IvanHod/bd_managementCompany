@@ -6,7 +6,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Организация "@Model.fullName"</h2>
+<h2>Организация "@Model.fullName"
+<small><a href="/Organization/Edit/@Model.id">Редактировать</a></small>
+<a href="/Organization/Delete.@Model.id" class="btn btn-danger pull-right">Удалить</a>
+</h2>
 <div class="row">
 	<div class="col-md-3">
 		<h3>Реквизиты:</h3>
@@ -42,7 +45,7 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<td>Номер дома</td>
+					<td>адрес дома</td>
 					<td>Кол-во этажей</td>
 				</tr>
 			</thead>
@@ -83,7 +86,11 @@
 		type: "GET"
 	}).done(function(res) {
 		res.forEach(function(item){
-			var tr = '<tr><td><a href="House/Details/' + item.id + '">' + item.number + '</a></td>' + 
+			var tr = '<tr><td><a href="House/Details/' + item.id + '">' + 
+				item.region + ' , ' + 
+				item.city + ', ' +
+				item.street + ', ' +
+				item.number + '</a></td>' + 
 				'<td>' + item.countFloor + '</td></tr>';
 			$('#houses').append(tr);
 		});

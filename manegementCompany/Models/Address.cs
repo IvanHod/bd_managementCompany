@@ -14,6 +14,17 @@ namespace web.Models
 			db = new PeopleContext ();
 		}
 
+		public Address (int _id)
+		{
+			db = new PeopleContext ();
+			Address addr = db.Addresses.Find (_id);
+			region = addr.region;
+			area = addr.area;
+			city = addr.city;
+			street = addr.street;
+			house = addr.house;
+		}
+
 		public Address (string _region, string _area, string _city, string _street, string _house)
 		{
 			db = new PeopleContext ();

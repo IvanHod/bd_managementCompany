@@ -1,5 +1,5 @@
 ﻿@using web.Models;
-@model Owner
+@model MOwner
 
 @{
     ViewBag.Title = "Create";
@@ -37,7 +37,18 @@
 		@Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
 		@Html.ValidationMessageFor(model => model.email)
 	</div>
+	<label class="col-md-2">Пароль:</label>
+	<div class="col-md-2">
+		@Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+		@Html.ValidationMessageFor(model => model.password)
+	</div>
 	<input type="hidden" name="room" value="@Model.room" />
+</div>
+<div class="row">
+	<label class="col-md-2">Услуги:</label>
+	<div class="col-md-4">
+		<select id="services" name="services" class="select2 form-control" multiple="multiple"></select>
+	</div>
 </div>
 <div class="row form-group">
 	<div class="col-md-12 text-right">

@@ -75,9 +75,7 @@ namespace manegementCompany.Controllers
 		public JsonResult Select()
 		{
 			string roomsStr = Request.Params ["rooms"];
-			string comma = ",";
 			string[] rooms = roomsStr.Split (',');
-			//List<int> rooms = Request.Params ["rooms"].Split (",", 3);
 			List<Room> rms = new List<Room> {};
 			foreach(string id in rooms) {
 				int _id = Int32.Parse (id);

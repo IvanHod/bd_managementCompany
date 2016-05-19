@@ -18,6 +18,8 @@ create table owner(
 	patronimic varchar(10),
 	phone varchar(15),
 	email varchar(20),
+	hashPassword varchar(20),
+	services varchar(400),
 	room int,
 	primary key(id)
 );
@@ -51,6 +53,7 @@ create table house(
 	count_room int,
 	services varchar(200),
 	address int,
+	organization int,
 	primary key(id)
 );
 

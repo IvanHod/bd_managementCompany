@@ -17,7 +17,14 @@ namespace web.Models
 		public string name { get; set; }
 
 		[Column("street")]
-		public string city { get; set; }
+		public string street { get; set; }
+
+		public void updateCity (int st) {
+			if( street == null || street == "" )
+				street = "" + st;
+			else
+				street += "," + st;
+		}
 
 	}
 }

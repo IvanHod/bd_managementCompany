@@ -20,9 +20,10 @@ namespace web.Models
 		public string city { get; set; }
 
 		public void updateCity (int c) {
-			if( city == null )
-				city = "";
-			city += c + ",";
+			if( city == null || city == "" )
+				city = "" + c;
+			else
+				city += "," + c;
 		}
 	}
 }

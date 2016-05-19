@@ -114,6 +114,8 @@
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Controllers\OwnerController.cs" />
     <Compile Include="contextDbs\OwnerContext.cs" />
+    <Compile Include="Controllers\StreetController.cs" />
+    <Compile Include="Models\Street.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
@@ -209,12 +211,14 @@
     <Content Include="Views\House\Details.cshtml" />
     <Content Include="Views\Room\Details.cshtml" />
     <Content Include="Views\Owner\Create.cshtml" />
+    <Content Include="Views\Organization\Authorization.cshtml" />
+    <Content Include="Views\Owner\Authorization.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <XspParameters Port="7999" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+        <XspParameters Port="8001" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
