@@ -75,6 +75,11 @@ namespace manegementCompany.Controllers
             }
         }
 
+		public JsonResult SelectAll() {
+			List<Service> services = db.Services.ToList();
+			return Json (services, JsonRequestBehavior.AllowGet);
+		}
+
 		public JsonResult Select(string ids)
 		{
 			List<Service> services = new List<Service> {};

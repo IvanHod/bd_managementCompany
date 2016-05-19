@@ -21,6 +21,7 @@ namespace web.Models
 
 		public Owner(MOwner own) {
 			id = own.id;
+			organization = own.id;
 			name = own.name;
 			lastName = own.lastName;
 			patronimic = own.patronimic;
@@ -34,6 +35,9 @@ namespace web.Models
 
 		[Column("id")]
 		public int id { get; set; }
+
+		[Column("organization")]
+		public int organization { set; get; }
 
 		[Column("name")]
 		public string name { get; set; }
@@ -59,6 +63,16 @@ namespace web.Models
 		[Column("services_pay")]
 		public string servicesPay { get; set; }
 
+		public void removePayService(int _id) {
+			string[] ids = servicesPay.Split (',');
+			List<string> newServices = new List<string> {};
+			foreach(string strid in ids) {
+				if( _id != Int16.Parse(strid) )
+					newServices.Add(strid);
+			}
+			servicesPay = string.Join (",", newServices);
+		}
+
 		[Column("room")]
 		public int room { get; set; }
 	}
@@ -73,6 +87,8 @@ namespace web.Models
 		}
 
 		public int id { get; set; }
+
+		public int organization { set; get; }
 
 		[Required]
 		public string name { get; set; }

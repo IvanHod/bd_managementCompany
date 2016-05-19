@@ -50,14 +50,14 @@ namespace manegementCompany.Controllers
 			[Bind (Include = "fullName, name, phone, email,password,INN,KPP,OGRN,OKTMO")]Organization o)
         {
             //try {
-				Address legalAddress = new Address (
+				Address address = new Address (
 					Request.Params["address[region]"],
 					"",
 					Request.Params["address[city]"],
 					Request.Params["address[street]"],
 					Request.Params["address[house]"]
 				).save();
-				Address address = new Address (
+				Address legalAddress = new Address (
 					Request.Params["legalAddress[region]"],
 					"",
 					Request.Params["legalAddress[city]"],
@@ -117,7 +117,36 @@ namespace manegementCompany.Controllers
 			} catch {
 				return false;
 			}
+		}
 
+		[HttpPost]
+		public bool Service(DBRequest request) {
+			try {
+				int idOrganization = request.organization;
+				db.Requests.Add(request);
+				db.SaveChanges();
+				db.Organizations.Find(idOrganization).addRequest(request.id);
+				db.SaveChanges();
+				ownerDb.owners.Find(request.owner).removePayService(request.service);
+				ownerDb.SaveChanges();
+				return true;
+			} catch {
+				return false;
+			}
+		}
+
+		[HttpPost]
+		public bool ServiceComplet(int request, string price) {
+			try {
+				int idOrganization = ((AuthModel)Session["Model"]).getId();
+				db.Requests.Remove(db.Requests.Find(request));
+				db.SaveChanges();
+				db.Organizations.Find(idOrganization).removeRequest(request);
+				db.SaveChanges();
+				return true;
+			} catch {
+				return false;
+			}
 		}
 
 		[HttpPost]

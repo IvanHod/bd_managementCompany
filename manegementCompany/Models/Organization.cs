@@ -50,6 +50,26 @@ namespace web.Models
 		[Column("psw")]
 		public string password { get; set; }
 
+		[Column("requests")]
+		public string requests { get; set; }
+
+		public void addRequest (int request) {
+			if (requests == null || requests == "")
+				requests = "" + request;
+			else
+				requests += "," + request;
+		}
+
+		public void removeRequest (int request) {
+			string[] ids = requests.Split (',');
+			List<string> newRequest = new List<string> {};
+			foreach(string strid in ids) {
+				if( request != Int16.Parse(strid) )
+					newRequest.Add(strid);
+			}
+			requests = string.Join (",", newRequest);
+		}
+
 		string GetHashString(string s)  
 		{  
 			//переводим строку в байт-массим  

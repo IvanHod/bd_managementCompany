@@ -61,7 +61,8 @@
 				<label>Выберете район: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="legalAddress[region]" data-type="Region" class="select2 form-control Region"></select>
+				<select id="legalRegion" class="select2 form-control Region"></select>
+				<input type="hidden" name="legalAddress[region]" />
 			</div>
 		</div>
 		<div class="row">
@@ -69,7 +70,8 @@
 				<label>Выберете город: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="legalAddress[city]" data-type="City" class="select2 form-control City"></select>
+				<select id="legalCity" class="select2 form-control City"></select>
+				<input type="hidden" name="legalAddress[city]" />
 			</div>
 		</div>
 		<div class="row">
@@ -77,15 +79,16 @@
 				<label>Выберете улицу: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="legalAddress[street]" data-type="Street" class="select2 form-control Street"></select>
+				<select id="legalStreet" class="select2 form-control Street"></select>
+				<input type="hidden" name="legalAddress[street]" />
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-4">
-				<label>Выберете дом: </label>
+				<label>Введите дом: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="legalAddress[house]" data-type="House" class="select2 form-control House"></select>
+				<input name="legalAddress[house]" class="form-control House">
 			</div>
 		</div>
 	</div>
@@ -96,7 +99,8 @@
 				<label>Выберете район: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="address[region]" data-type="Region" class="select2 form-control Region"></select>
+				<select id="region" class="select2 form-control Region"></select>
+				<input type="hidden" name="address[region]" />
 			</div>
 		</div>
 		<div class="row">
@@ -104,7 +108,8 @@
 				<label>Выберете город: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="address[city]" data-type="City" class="select2 form-control City"></select>
+				<select id="city" class="select2 form-control City"></select>
+				<input type="hidden" name="address[city]" />
 			</div>
 		</div>
 		<div class="row">
@@ -112,7 +117,8 @@
 				<label>Выберете улицу: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="address[street]" data-type="Street" class="select2 form-control Street"></select>
+				<select id="street" class="select2 form-control Street"></select>
+				<input type="hidden" name="address[street]" />
 			</div>
 		</div>
 		<div class="row">
@@ -120,7 +126,7 @@
 				<label>Выберете дом: </label>
 			</div>
 			<div class="col-md-8 form-group">
-				<select name="address[house]" data-type="House" class="select2 form-control House"></select>
+				<input name="address[house]" class="form-control House">
 			</div>
 		</div>
 	</div>
@@ -169,50 +175,174 @@
 
 
 <script>
+var regions = [],
+	legalCities = [],
+	cities = [],
+	legalStreets = [],
+	streets = [];
+
+	var _find = function(mass, callback) {
+		result = null;
+		mass.forEach(function(item) {
+			if( callback(item) ) {
+				result = item
+			}
+		})
+		return result;
+	}
 
 	$(".select2").select2({tags: true});
 
     var elements = ['Region', 'City', 'Street', 'House']
 
-    elements.forEach(function(el) {
-		$.ajax({
-			url: '/' + el + '/Select',
-			type: 'GET'
-		}).done(function(res){
-			$('select.' + el).select2({data: res});
-			console.log(res);
-		});
-    })
-
-	$(".select2.Region").on("select2:select", function (e) {
-		var val = $(e.currentTarget).val();
-		$.ajax({
-			url: '/Region/Create',
-			type: 'POST',
-			data: { name: val, city: '' }
-		}).done(function(res) {
-			console.log(res); 
-		}).error(function(err){
-			console.error(err);
-		});
+	$.ajax({ url: '/Region/Select', type: 'GET'}).done(function(res){
+		regions = res;
+		$('.Region').select2({data: res, tags: true}).trigger("change");
 	});
 
-	$(".select2:not(.Region)").on("select2:select", function (e) {
-		var val = $(e.currentTarget).val(),
-			type = $(e.currentTarget).data('type');
-		$.ajax({
-			url: '/' + type + '/Create',
-			type: 'POST',
-			data: { 
-				parent: $(e.target).closest('.row').prev().find('select').val(), 
-				name: val
-			}
-		}).done(function(res) {
-			console.log(res); 
-		}).error(function(err){
-			console.error(err);
-		});
+	$('#legalRegion').change(function() {
+		var val = $(this).val(),
+			el = this;
+		if(!val) return;
+		if( _find(regions, function(item) { return item.id == val } ) ) {
+			$('[name="legalAddress[region]"]').val( $('#select2-legalRegion-container').text() );
+			$.ajax({ url: '/City/Select', type: 'GET', data: {parent: val} })
+			.done(function(res){
+				legalCities = res;
+				$('#legalCity').empty().select2({data: res, tags: true}).trigger("change");
+			});
+		} else {
+			$.ajax({ url: '/Region/Create', type: 'POST', data: { name: val, city: '' } })
+				.done(function(res) {
+					regions.push(res);
+					$('#region').empty().select2({data: regions, tags: true})
+						.val(res.id).trigger("change");
+					setTimeout(function() {
+						$('[name="legalAddress[region]"]').val( $('#select2-legalRegion-container').text() );
+					}, 400);
+				});
+		}
+	})
+
+	$('#region').change(function() {
+		var val = $(this).val(),
+			el = this;
+		if(!val) return;
+		if( _find(regions, function(item) { return item.id == val } ) ) {
+			$('[name="address[region]"]').val( $('#select2-region-container').text() );
+			$.ajax({ url: '/City/Select', type: 'GET', data: {parent: val} })
+			.done(function(res){
+				cities = res;
+				$('#city').empty().select2({data: res, tags: true}).trigger("change");
+			});
+		} else {
+			$.ajax({ url: '/Region/Create', type: 'POST', data: { name: val, city: '' } })
+				.done(function(res) {
+					regions.push(res);
+					$('#region').empty().select2({data: regions, tags: true})
+						.val(res.id).trigger("change");
+					setTimeout(function() {
+						$('[name="address[region]"]').val( $('#select2-region-container').text() );
+					}, 400);
+				});
+		}
+	})
+
+	$('#legalCity').change(function() {
+		var val = $(this).val(),
+			parent = $('#legalRegion').val(),
+			el = this;
+		if(!val) {
+			streets = [];
+			$('#legalStreet').empty().trigger('change');
+			return;
+		}
+		if( _find(legalCities, function(item) { return item.id == val } ) ) {
+			$('[name="legalAddress[city]"]').val( $('#select2-legalCity-container').text() );
+			$.ajax({ url: '/Street/Select', type: 'GET', data: {parent: val} })
+				.done(function(res){
+					legalStreets = res;
+					$('#legalStreet').empty().select2({data: res, tags: true}).trigger("change");
+				});
+		} else {
+			$.ajax({ url: '/City/Create', type: 'POST', data: { parent: parent, name: val, street: '' } })
+				.done(function(res) {
+					legalCities.push(res);
+					$('#legalCity').empty().select2({data: cities, tags: true})
+						.val(res.id).trigger("change");
+					setTimeout(function() {
+						$('[name="legalAddress[city]"]').val( $('#select2-legalCity-container').text() );
+					}, 400);
+				});
+		}
 	});
+
+	$('#city').change(function() {
+		var val = $(this).val(),
+			parent = $('#region').val(),
+			el = this;
+		if(!val) {
+			streets = [];
+			$('#street').empty().trigger('change');
+			return;
+		}
+		if( _find(cities, function(item) { return item.id == val } ) ) {
+			$('[name="address[city]"]').val( $('#select2-city-container').text() );
+			$.ajax({ url: '/Street/Select', type: 'GET', data: {parent: val} })
+				.done(function(res){
+					streets = res;
+					$('#street').empty().select2({data: res, tags: true}).trigger("change");
+				});
+		} else {
+			$.ajax({ url: '/City/Create', type: 'POST', data: { parent: parent, name: val, street: '' } })
+				.done(function(res) {
+					cities.push(res);
+					$('#city').empty().select2({data: cities, tags: true})
+						.val(res.id).trigger("change");
+					setTimeout(function() {
+						$('[name="address[city]"]').val( $('#select2-city-container').text() );
+					}, 400);
+				});
+		}
+	});
+
+	$('#legalStreet').change(function() {
+		var val = $(this).val(),
+			parent = $('#legalCity').val(),
+			el = this;
+		if(!val) return;
+		if( !_find(legalStreets, function(item) { return item.id == val } ) ) {
+			$.ajax({ url: '/Street/Create', type: 'POST', data: { parent: parent, name: val, house: '' } })
+				.done(function(res) {
+					legalStreets.push(res);
+					$('#legalstreet').empty().select2({data: streets, tags: true})
+						.val(res.id).trigger("change");
+					setTimeout(function() {
+						$('[name="legalAddress[street]"]').val( $('#select2-legalStreet-container').text() );
+					}, 400);
+				});
+		} else
+			$('[name="legalAddress[street]"]').val( $('#select2-legalStreet-container').text() );
+	})
+
+$('#street').change(function() {
+	var val = $(this).val(),
+		parent = $('#city').val(),
+		el = this;
+	if(!val) return;
+	if( !_find(streets, function(item) { return item.id == val } ) ) {
+		$.ajax({ url: '/Street/Create', type: 'POST', data: { parent: parent, name: val, house: '' } })
+			.done(function(res) {
+				streets.push(res);
+				$('#street').empty().select2({data: streets, tags: true})
+					.val(res.id).trigger("change");
+				setTimeout(function() {
+					$('[name="address[street]"]').val( $('#select2-street-container').text() );
+				}, 400);
+			});
+	} else
+		$('[name="address[street]"]').val( $('#select2-street-container').text() );
+})
 
 	function setActionTab() {
 		$('nav li').removeClass('active');

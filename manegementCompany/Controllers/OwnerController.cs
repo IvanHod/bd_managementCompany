@@ -23,7 +23,7 @@ namespace manegementCompany.Controllers
         public ActionResult Index()
         {
 			if (Session ["Model"] != null && !((AuthModel)Session ["Model"]).isOrganization ())
-				return View (((AuthModel)Session ["Model"]).owner);
+				return View ( db.owners.Find(((AuthModel)Session["Model"]).getId()));
 			else
 				return RedirectToAction ("Index", "Home");
         }
@@ -44,6 +44,7 @@ namespace manegementCompany.Controllers
         {
 			try {
 				//if (ModelState.IsValid) {
+				o.organization = ((AuthModel)Session["Model"]).getId();
 				Owner owner = new Owner(o);
 				db.owners.Add(owner);
 				db.SaveChanges();

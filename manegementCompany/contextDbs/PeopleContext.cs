@@ -22,6 +22,8 @@ namespace web.ContextDbs
 
 		public DbSet <Address> Addresses { get; set; }
 
+		public DbSet <DBRequest> Requests { get; set; }
+
 		public Organization authorization(string email, string password) {
 			Organization organization = null;
 			foreach (Organization org in Organizations) {

@@ -65,9 +65,26 @@
 				'<td>'+item.name+'</td>'+
 				'<td>'+item.description+'</td>' +
 				'<td><input data-id="'+item.id+'" class="form-control"/></td>'+
-				'<td><button class="btn btn-success">Отправить</button></td>' +
+				'<td><button class="btn btn-success sendServicePay">Отправить</button></td>' +
 				'</tr>');
 		})
+	})
+
+	$(document).on('click', '.sendServicePay', function(){
+		var $input = $(this).closest('tr').find('input'),
+			el = this;
+		$.ajax({
+			url: '/Organization/Service',
+			type: 'POST',
+			data: {
+				owner: $('#ownerId').val()*1,
+				service: $input.data('id')*1,
+				organization: 3,
+				number: $input.val()
+			}
+		}).done(function(res) {
+			$(el).closest('tr').remove();
+		}).error(function(err) { alert('Error:', err ); })
 	})
 
 	function setActionTab() {

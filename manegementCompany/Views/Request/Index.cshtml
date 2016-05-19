@@ -1,0 +1,54 @@
+﻿@using web.Models;
+﻿@model IEnumerable < MRequest >
+
+@{
+    ViewBag.Title = "Заявки";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table">
+	<thead>
+	<tr>
+		<th>Пользователь</th>
+		<th>Услуга</th>
+		<th>Числовое значение</th>
+		<th style="width:200px">Сумма</th>
+		<th>Действие</th>
+	</tr>
+	</thead>
+	<tbody>
+	@foreach(MRequest request in @Model) {
+		<tr>
+			<td>@request.ownerName</td>
+			<td>@request.serviceName</td>
+			<td>@request.number</td>
+			<td><input type="number" data-id="@request.id" class="form-control" /></td>
+			<td><button class="btn btn-xs btn-success success">Сохранить</button></td>
+		</tr>
+	}
+	</tbody>
+</table>
+
+<script>
+
+$(document).on('click', '.success', function(){
+		var $input = $(this).closest('tr').find('input'),
+			el = this;
+		$.ajax({
+			url: '/Organization/ServiceComplet',
+			type: 'POST',
+			data: {
+				request: $input.data('id')*1,
+				price: $input.val()
+			}
+		}).done(function(res) {
+			$(el).closest('tr').remove();
+		}).error(function(err) { alert('Error:', err ); })
+	})
+
+
+	function setActionTab() {
+		$('nav li').removeClass('active');
+	}
+
+</script>

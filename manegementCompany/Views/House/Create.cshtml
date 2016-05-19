@@ -60,7 +60,7 @@
 <div class="row form-group">
 	<div class="col-md-12 text-right">
 		<div class="btn-group">
-			<input type="button" class="btn btn-danger" value="Отменить" />
+			<a href="/Organization" type="button" class="btn btn-danger">Отменить</a>
 			<input type="submit" class="btn btn-success" value="Сохранить" />
 		</div>
 	</div>
@@ -126,7 +126,6 @@ $('#city').change(function() {
 		return;
 	}
 	if( _find(cities, function(item) { return item.id == val } ) ) {
-		console.log($('#select2-region-container').text())
 		$('[name="city"]').val( $('#select2-city-container').text() );
 		$.ajax({ url: '/Street/Select', type: 'GET', data: {parent: val} })
 			.done(function(res){
@@ -166,7 +165,7 @@ $('#street').change(function() {
 })
 
 $.ajax({
-	url: '/Service/Select',
+	url: '/Service/SelectAll',
 	type: 'GET'
 }).done(function(res) {
 	$('#services').select2({data: res});

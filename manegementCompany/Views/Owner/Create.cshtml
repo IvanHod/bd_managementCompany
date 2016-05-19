@@ -64,7 +64,7 @@
 $(".select2").select2({width: '100%'});
 
 $.ajax({
-	url: '/Service/Select',
+	url: '/Service/SelectAll',
 	type: 'GET'
 }).done(function(res) {
 	$('#services').select2({data: res});

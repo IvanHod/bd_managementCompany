@@ -15,7 +15,9 @@
 		Новые оповещение:
 	</label>
 	<label class="col-md-6" id="new ">
-		Нет
+		@if( @Model.requests != null && @Model.requests != "" ) {
+			<a href="/Request">@Model.requests.Split(',').Length заявка</a>
+		} else {<span>Нет заявок</span>}
 	</label>
 	<div class="col-md-4 text-right">
 		<button id="generation" class="btn btn-warning">Сгенерировать</button>

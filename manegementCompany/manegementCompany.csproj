@@ -116,6 +116,8 @@
     <Compile Include="contextDbs\OwnerContext.cs" />
     <Compile Include="Controllers\StreetController.cs" />
     <Compile Include="Models\Street.cs" />
+    <Compile Include="Models\Request.cs" />
+    <Compile Include="Controllers\RequestController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />
@@ -214,6 +216,7 @@
     <Content Include="Views\Organization\Authorization.cshtml" />
     <Content Include="Views\Owner\Authorization.cshtml" />
     <Content Include="Views\Owner\Index.cshtml" />
+    <Content Include="Views\Request\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

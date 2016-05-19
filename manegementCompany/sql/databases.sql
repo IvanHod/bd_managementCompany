@@ -13,6 +13,7 @@ create table service(
 
 create table owner(
 	id int auto_increment,
+	organization int,
 	name varchar(10),
 	last_name varchar(10),
 	patronimic varchar(10),
@@ -20,6 +21,7 @@ create table owner(
 	email varchar(20),
 	hashPassword varchar(20),
 	services varchar(400),
+	servicesPay varchar(400),
 	room int,
 	primary key(id)
 );
@@ -70,6 +72,7 @@ create table organization(
 	phone varchar(200),
 	email varchar(20),
 	psw varchar(20),
+	requests varchar(1000),
 	unique(email),
 	primary key(id)
 );
@@ -92,5 +95,14 @@ create table street(
 	id int auto_increment,
 	name varchar(30),
 	house varchar(500),
+	primary key(id)
+);
+
+create table request(
+	id int auto_increment,
+	owner int,
+	organization int,
+	service int,
+	number varchar(50),
 	primary key(id)
 );
