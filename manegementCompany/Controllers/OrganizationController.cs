@@ -15,9 +15,15 @@ namespace manegementCompany.Controllers
 	{
 		private PeopleContext db;
 
+		private OwnerContext ownerDb;
+
+		private ServiceContext serviceDb;
+
 		public OrganizationController()
 		{
 			db = new PeopleContext ();
+			ownerDb = new OwnerContext ();
+			serviceDb = new ServiceContext ();
 		}
 
         public ActionResult Index()
@@ -97,6 +103,22 @@ namespace manegementCompany.Controllers
                 return View ();
             }
         }
+
+		[HttpPost]
+		public bool Generation()
+		{
+			try {
+				List<Owner> owners = ownerDb.owners.ToList ();
+				foreach (Owner own in owners) {
+					own.servicesPay = own.services;
+				}
+				ownerDb.SaveChanges ();
+				return true;
+			} catch {
+				return false;
+			}
+
+		}
 
 		[HttpPost]
 		public ActionResult Authorization(AuthorizationModel auth)

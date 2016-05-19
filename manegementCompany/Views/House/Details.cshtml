@@ -5,7 +5,10 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h3 id="house" data-floor=@Model.countFloor data-rooms=@Model.rooms>Просмотр дома</h3>
+<h3 id="house" data-floor=@Model.countFloor data-rooms=@Model.rooms><a href="/Organization">Назад </a>Просмотр дома
+	<small><a href="/House/Edit/@Model.id">Редактировать</a></small>
+	<a class="btn btn-danger pull-right">Удалить</a>
+</h3>
 <div class="row">
 	<div class="col-md-12">
 		<table class="table">

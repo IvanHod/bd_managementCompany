@@ -56,6 +56,9 @@ namespace web.Models
 		[Column("services")]
 		public string services { get; set; }
 
+		[Column("services_pay")]
+		public string servicesPay { get; set; }
+
 		[Column("room")]
 		public int room { get; set; }
 	}

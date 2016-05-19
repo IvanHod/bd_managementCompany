@@ -75,9 +75,15 @@ namespace manegementCompany.Controllers
             }
         }
 
-		public JsonResult Select()
+		public JsonResult Select(string ids)
 		{
-			List<Service> services = db.Services.ToList ();
+			List<Service> services = new List<Service> {};
+			if (ids != null && ids != "" ) {
+				string[] _ids = ids.Split(',');
+				foreach(string id in _ids) {
+					services.Add(db.Services.Find(Int16.Parse(id)));
+				}
+			}
 			return Json (services, JsonRequestBehavior.AllowGet);
 		}
     }

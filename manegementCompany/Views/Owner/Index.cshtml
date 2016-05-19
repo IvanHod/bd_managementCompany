@@ -1,0 +1,77 @@
+﻿@using web.Models;
+@model Owner
+
+@{
+    ViewBag.Title = "Owner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Собственник "@Model.name @Model.lastName @Model.patronimic"</h3>
+<input id="ownerId" type="hidden" value="@Model.id" />
+<div class="row">
+	<label class="col-md-2">E-mail:</label>
+	<div class="col-md-4">@Model.email</div>
+</div>
+<div class="row">
+	<label class="col-md-2">Телефон:</label>
+	<div class="col-md-4">@Model.phone</div>
+</div>
+<div class="row">
+	<label class="col-md-2">Подключенные услуги</label>
+	<div class="col-md-8" id="services"></div>
+	<input type="hidden" id="idServices" value="@Model.services" />
+	<input type="hidden" id="idServicesPay" value="@Model.servicesPay" />
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<table class="table">
+		<thead>
+		<tr>
+			<th>Название услуги</th>
+			<th>Описание услуги</th>
+			<th>Числовая характеристика</th>
+			<th>Действия</th>
+		</tr>
+		</thead>
+		<tbody id="servicesPay"></tbody>
+		</table>
+	</div>
+</div>
+<script>
+	$.ajax({
+		url : '/Service/Select',
+		type: 'GET',
+		data: {ids: $('#idServices').val()}
+	}).done(function(res) {
+		if( !res[0] ) {
+			$('#services').append('Нет услуг');
+			return;
+		}
+		res.forEach(function(item) {
+			$('#services').append('<a href="/Service/Details/'+item.id+'">'+item.name+', </a>');
+		})
+	})
+
+	$.ajax({
+		url : '/Service/Select',
+		data: {ids: $('#idServicesPay').val() }
+	}).done(function(res) {
+		if( !res[0] ) {
+			$('#servicesPay').append('<tr><td colspan="4">Записей не найдено</td></tr>');
+			return;
+		}
+		res.forEach(function(item) {
+			$('#servicesPay').append('<tr>'+
+				'<td>'+item.name+'</td>'+
+				'<td>'+item.description+'</td>' +
+				'<td><input data-id="'+item.id+'" class="form-control"/></td>'+
+				'<td><button class="btn btn-success">Отправить</button></td>' +
+				'</tr>');
+		})
+	})
+
+	function setActionTab() {
+		$('nav li').removeClass('active');
+		$('#owner').addClass("active");
+	}
+</script>

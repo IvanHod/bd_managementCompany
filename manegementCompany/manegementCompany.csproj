@@ -213,6 +213,7 @@
     <Content Include="Views\Owner\Create.cshtml" />
     <Content Include="Views\Organization\Authorization.cshtml" />
     <Content Include="Views\Owner\Authorization.cshtml" />
+    <Content Include="Views\Owner\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

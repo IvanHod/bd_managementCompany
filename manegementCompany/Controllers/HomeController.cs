@@ -30,6 +30,12 @@ namespace manegementCompany.Controllers
 
 			return View (organizations);
 		}
+
+		public ActionResult logout()
+		{
+			Session ["Model"] = null;
+			return RedirectToAction ("Index");
+		}
 	}
 }
 

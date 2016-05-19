@@ -22,7 +22,10 @@ namespace manegementCompany.Controllers
 
         public ActionResult Index()
         {
-            return View ();
+			if (Session ["Model"] != null && !((AuthModel)Session ["Model"]).isOrganization ())
+				return View (((AuthModel)Session ["Model"]).owner);
+			else
+				return RedirectToAction ("Index", "Home");
         }
 
         public ActionResult Details(int id)

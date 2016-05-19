@@ -11,6 +11,17 @@
 <a href="/Organization/Delete.@Model.id" class="btn btn-danger pull-right">Удалить</a>
 </h2>
 <div class="row">
+	<label class="col-md-2">
+		Новые оповещение:
+	</label>
+	<label class="col-md-6" id="new ">
+		Нет
+	</label>
+	<div class="col-md-4 text-right">
+		<button id="generation" class="btn btn-warning">Сгенерировать</button>
+	</div>
+</div>
+<div class="row">
 	<div class="col-md-3">
 		<h3>Реквизиты:</h3>
 		<div class="row">
@@ -81,13 +92,24 @@
 		if(!res[0]) $('#services').append('<tr><td colspan="2">Нет услуг</td></tr>');
 	})
 
+	$("#generation").click(function(){
+		$.ajax({
+			url : '/Organization/Generation',
+			type: 'POST'
+		}).done(function(res) {
+			alert("Оповещения для собственников успешно сгенерированны: ");
+		}).error(function(err){
+			alert("Ошибка: ", err);
+		})
+	})
+
 	$.ajax({
 		url: "/House/Select",
 		type: "GET"
 	}).done(function(res) {
 		res.forEach(function(item){
 			var tr = '<tr><td><a href="House/Details/' + item.id + '">' + 
-				item.region + ' , ' + 
+				item.region + ', ' + 
 				item.city + ', ' +
 				item.street + ', ' +
 				item.number + '</a></td>' + 
